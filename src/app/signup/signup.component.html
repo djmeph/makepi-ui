@@ -1,1 +1,14 @@
-<p>signup works!</p>
+<form [formGroup]="signupForm" (ngSubmit)="signup()">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Register a new account</h5>
+            <label>Email</label>
+            <input type="text" formControlName="email" class="form-control usgm-input" />
+            <label>Password</label>
+            <input type="password" formControlName="password" class="form-control usgm-input" />
+            <div class="pt-2">
+                <button type="submit" [disabled]="signupForm.invalid" class="btn btn-light">Create Account</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -20,4 +20,12 @@ export class UserService {
         this.jwtService.token = result.token;
         localStorage.setItem('token', this.jwtService.token);
     }
+
+    async register(username: string, password: string): Promise<any>  {
+        const result: any = await this.http
+            .post(`${config.API_URI}/register`, { username, password })
+            .toPromise();
+        this.jwtService.token = result.token;
+        localStorage.setItem('token', this.jwtService.token);
+    }
 }

@@ -19,8 +19,11 @@ export class JwtService {
         if (!token) { return false; }
         const decodedToken = helper.decodeToken(`${token}`) as TokenDecoded;
         const exp = moment.unix(decodedToken.exp);
-        const isTokenExpired = moment().isAfter(exp);
-        if (isTokenExpired) { return false; }
-        return !isTokenExpired;
+        const tokenIsExpired = moment().isAfter(exp);
+        if (tokenIsExpired) {
+            this.token = null;
+            localStorage.removeItem('token');
+        }
+        return !tokenIsExpired;
     }
 }
