@@ -5,12 +5,12 @@
     </button>
     <div class="collapse navbar-collapse" [ngClass]="{ 'show': hamburger }">
         <ul class="navbar-nav mr-auto">
-            <li (click)="nav(pages.DASHBOARD)" class="nav-item active">
-                <button class="nav-link btn btn-link">Home</button>
+            <li (click)="nav(pages.DASHBOARD)" class="nav-item" [ngClass]="{ 'active': getPage(pages.DASHBOARD) }">
+                <button class="nav-link btn btn-link">Dashboard</button>
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
-            <li (click)="nav(pages.LOGIN)" class="nav-item active">
+            <li (click)="nav(pages.LOGIN)" class="nav-item" [ngClass]="{ 'active': getPage(pages.LOGIN) }">
                 <button class="nav-link btn btn-link">Login</button>
             </li>
         </ul>

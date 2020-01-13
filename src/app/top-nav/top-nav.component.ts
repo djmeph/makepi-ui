@@ -30,8 +30,12 @@ export class TopNavComponent implements OnInit {
     }
 
     nav(page: string) {
-        this.router.navigate([`/${page}`]);
         this.hamburger = false;
+        this.router.navigate([`/${page}`]);
+    }
+
+    getPage(page: Pages) {
+        return this.router.url === `/${page}`;
     }
 
 }

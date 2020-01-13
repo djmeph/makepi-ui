@@ -47,3 +47,4 @@ Thumbs.db
 
 # Custom
 /config.json
+/src/index.html
