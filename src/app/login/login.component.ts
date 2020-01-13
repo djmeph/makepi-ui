@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         const username = this.loginForm.get('email').value.toLowerCase();
         const password = this.loginForm.get('password').value;
-        const remember = this.loginForm.get('remember').value;
+        const remember = !!this.loginForm.get('remember').value;
         try {
             await this.userService.login(username, password, remember);
             this.router.navigate(['/dashboard']);
