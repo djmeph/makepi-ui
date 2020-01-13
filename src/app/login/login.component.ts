@@ -16,7 +16,8 @@ export class LoginComponent implements OnInit {
 
     loginForm = new FormGroup({
         email: new FormControl(this.loginStatus.email, [Validators.required, Validators.email]),
-        password: new FormControl(this.loginStatus.password, [Validators.required])
+        password: new FormControl(this.loginStatus.password, [Validators.required]),
+        remember: new FormControl(this.loginStatus.remember, [Validators.required]),
     });
 
     constructor(
@@ -37,8 +38,9 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         const username = this.loginForm.get('email').value.toLowerCase();
         const password = this.loginForm.get('password').value;
+        const remember = this.loginForm.get('remember').value;
         try {
-            await this.userService.login(username, password, false);
+            await this.userService.login(username, password, remember);
             this.router.navigate(['/dashboard']);
             this.loading = false;
         } catch (err) {

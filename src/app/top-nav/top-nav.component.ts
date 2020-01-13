@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../user.service';
+import { JwtService } from '../jwt.service';
 import { Pages } from '../../enums/pages';
 import * as config from 'config.json';
 
@@ -9,7 +9,7 @@ import * as config from 'config.json';
     templateUrl: './top-nav.component.html',
     styleUrls: ['./top-nav.component.scss']
 })
-export class TopNavComponent implements OnInit {
+export class TopNavComponent {
 
     hamburger: boolean;
     pages = Pages;
@@ -18,13 +18,9 @@ export class TopNavComponent implements OnInit {
     constructor(
         private router: Router,
         public route: ActivatedRoute,
-        public userService: UserService,
+        public jwtService: JwtService,
     ) {
         this.hamburger = false;
-    }
-
-    ngOnInit() {
-        console.log(this.config);
     }
 
     expandMenu() {
@@ -41,7 +37,7 @@ export class TopNavComponent implements OnInit {
     }
 
     logout() {
-        delete this.userService.jwtToken;
+        delete this.jwtService.token;
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
     }

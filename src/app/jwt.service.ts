@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserService } from './user.service';
 import { TokenDecoded } from '../models/token-decoded';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import * as _ from 'lodash';
@@ -11,13 +10,12 @@ const helper = new JwtHelperService();
     providedIn: 'root'
 })
 export class JwtService {
+    token: string;
 
-    constructor(
-        private userService: UserService
-    ) { }
+    constructor() { }
 
     public isAuthenticated() {
-        const token = this.userService.jwtToken;
+        const token = this.token;
         if (!token) { return false; }
         const decodedToken = helper.decodeToken(`${token}`) as TokenDecoded;
         const exp = moment.unix(decodedToken.exp);

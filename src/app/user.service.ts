@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { JwtService } from './jwt.service';
 import * as config from 'config.json';
 
 @Injectable({
@@ -7,17 +8,16 @@ import * as config from 'config.json';
 })
 export class UserService {
 
-    jwtToken: string;
-
     constructor(
         private http: HttpClient,
+        private jwtService: JwtService,
     ) { }
 
     async login(username: string, password: string, remember: boolean): Promise<any>  {
         const result: any = await this.http
             .post(`${config.API_URI}/login`, { username, password, remember })
             .toPromise();
-        this.jwtToken = result.token;
-        localStorage.setItem('token', this.jwtToken);
+        this.jwtService.token = result.token;
+        localStorage.setItem('token', this.jwtService.token);
     }
 }
