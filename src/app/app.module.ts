@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { HttpInterceptorService } from './http-interceptor.service';
 import { TopNavComponent } from './top-nav/top-nav.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { TopNavComponent } from './top-nav/top-nav.component';
         LoginComponent,
         PageNotFoundComponent,
         DashboardComponent,
-        TopNavComponent
+        TopNavComponent,
+        SignupComponent
     ],
     imports: [
         BrowserModule,

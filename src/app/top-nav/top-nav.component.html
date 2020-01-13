@@ -14,5 +14,10 @@
                 <button class="nav-link btn btn-link">Login</button>
             </li>
         </ul>
+        <ul class="navbar-nav my-2 my-lg-0">
+            <li (click)="nav(pages.SIGNUP)" class="nav-item" [ngClass]="{ 'active': getPage(pages.SIGNUP) }">
+                <button class="nav-link btn btn-link">Register</button>
+            </li>
+        </ul>
     </div>
 </nav>
