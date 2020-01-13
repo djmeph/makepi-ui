@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'config';
+import * as config from 'config.json';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GlobalService {
-    uri = environment.API_URI;
+    uri = config.API_URI;
     jsonHeaders: any;
 
     constructor() {
