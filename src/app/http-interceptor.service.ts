@@ -16,16 +16,13 @@ export class HttpInterceptorService implements HttpInterceptor {
     ) { }
     intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
-        return from(this.jwtService.isAuthenticated())
-        .pipe(switchMap(isAuthenticated => {
-            const token = this.userService.jwtToken;
-            const authReq = isAuthenticated ? req.clone({
-                headers: req.headers
-                .append('Authorization', `Bearer ${token}`)
-            }) : req.clone({
-                headers: req.headers
-            });
-            return next.handle(authReq);
-        }));
+        const token = this.userService.jwtToken;
+        const authReq = this.jwtService.isAuthenticated() ? req.clone({
+            headers: req.headers
+            .append('Authorization', `Bearer ${token}`)
+        }) : req.clone({
+            headers: req.headers
+        });
+        return next.handle(authReq);
     }
 }

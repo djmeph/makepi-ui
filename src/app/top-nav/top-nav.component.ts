@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../user.service';
 import { Pages } from '../../enums/pages';
 import * as config from 'config.json';
 
@@ -17,6 +18,7 @@ export class TopNavComponent implements OnInit {
     constructor(
         private router: Router,
         public route: ActivatedRoute,
+        public userService: UserService,
     ) {
         this.hamburger = false;
     }
@@ -36,6 +38,12 @@ export class TopNavComponent implements OnInit {
 
     getPage(page: Pages) {
         return this.router.url === `/${page}`;
+    }
+
+    logout() {
+        delete this.userService.jwtToken;
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
     }
 
 }

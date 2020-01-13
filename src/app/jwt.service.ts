@@ -16,7 +16,7 @@ export class JwtService {
         private userService: UserService
     ) { }
 
-    public async isAuthenticated() {
+    public isAuthenticated() {
         const token = this.userService.jwtToken;
         if (!token) { return false; }
         const decodedToken = helper.decodeToken(`${token}`) as TokenDecoded;

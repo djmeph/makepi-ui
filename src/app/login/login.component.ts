@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
     selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private userService: UserService,
     ) {
         this.loading = false;
     }
@@ -36,9 +38,12 @@ export class LoginComponent implements OnInit {
         const username = this.loginForm.get('email').value.toLowerCase();
         const password = this.loginForm.get('password').value;
         try {
-
+            await this.userService.login(username, password, false);
+            this.router.navigate(['/dashboard']);
+            this.loading = false;
         } catch (err) {
-
+            console.error(err);
+            this.loading = false;
         }
     }
 

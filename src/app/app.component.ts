@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from './user.service'
 
 @Component({
     selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
     title = 'makepi-ui';
+
+    constructor(
+        private userService: UserService,
+    ) {
+        this.userService.jwtToken = localStorage.getItem('token');
+    }
 }
