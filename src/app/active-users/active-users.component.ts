@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
+import { AlertService, Alerts } from '../alert.service';
 import { User } from '../../models/user';
 import { Access } from '../../enums/access';
 import * as _ from 'lodash';
@@ -19,6 +20,7 @@ export class ActiveUsersComponent implements OnInit {
 
     constructor(
         private userService: UserService,
+        private alertService: AlertService,
     ) {
         this.users = [];
         this.access = Access;
@@ -39,8 +41,8 @@ export class ActiveUsersComponent implements OnInit {
             })) as User[];
             this.loading = false;
         } catch (err) {
-            console.error(err);
             this.loading = false;
+            this.alertService.openAlert('', err.error.message, Alerts.DANGER);
         }
 
     }
@@ -62,8 +64,8 @@ export class ActiveUsersComponent implements OnInit {
             await this.userService.put(payload);
             this.updating = false;
         } catch (err) {
-            console.error(err);
             this.updating = false;
+            this.alertService.openAlert('', err.error.message, Alerts.DANGER);
         }
     }
 

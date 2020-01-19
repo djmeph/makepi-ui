@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { GlobalService } from '../global.service';
 import { Pages } from '../../enums/pages';
 import { Access } from '../../enums/access';
-import * as config from 'config.json';
 
 @Component({
     selector: 'app-top-nav',
@@ -14,7 +14,6 @@ export class TopNavComponent implements OnInit {
 
     hamburger: boolean;
     pages = Pages;
-    config = config;
     access: any;
     timer: any;
 
@@ -22,6 +21,7 @@ export class TopNavComponent implements OnInit {
         private router: Router,
         public route: ActivatedRoute,
         public userService: UserService,
+        public globalService: GlobalService,
     ) {
         this.hamburger = false;
         this.access = Access;

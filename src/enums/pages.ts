@@ -4,4 +4,5 @@ export enum Pages {
     SIGNUP = 'signup',
     RECOVER = 'recover-password',
     ACTIVE_USERS = 'active-users',
+    SEARCH_USERS = 'search-users',
 }

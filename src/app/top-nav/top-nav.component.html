@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <span class="navbar-brand" href="#">{{config.default.APP_NAME}}</span>
+    <span class="navbar-brand" href="#">{{globalService.APP_NAME}}</span>
     <button (click)="expandMenu()" class="navbar-toggler">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,7 +8,7 @@
             <li *ngIf="userService.jwtService.token" (click)="nav(pages.DASHBOARD)" class="nav-item" [ngClass]="{ 'active': getPage(pages.DASHBOARD) }">
                 <button class="nav-link btn btn-link">Dashboard</button>
             </li>
-            <li *ngIf="userService.jwtService.token && userService.getAccess([access.ADMIN, access.KEYMASTER])" (click)="nav(pages.ACTIVE_USERS)" class="nav-item" [ngClass]="{ 'active': getPage(pages.ACTIVE_USERS) }">
+            <li *ngIf="userService.jwtService.token && userService.getAccess([access.ADMIN, access.KEYMASTER])" (click)="nav(pages.ACTIVE_USERS)" class="nav-item" [ngClass]="{ 'active': getPage(pages.ACTIVE_USERS) || getPage(pages.SEARCH_USERS) }">
                 <button class="nav-link btn btn-link">Active Users</button>
             </li>
         </ul>

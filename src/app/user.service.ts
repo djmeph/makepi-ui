@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { JwtService } from './jwt.service';
+import { GlobalService } from './global.service';
 import { User } from '../models/user';
 import { Access } from '../enums/access';
-import * as config from 'config.json';
 import * as _ from 'lodash';
 
 @Injectable({
@@ -27,14 +27,17 @@ export class UserService {
     constructor(
         private http: HttpClient,
         private jwt: JwtService,
+        public globalService: GlobalService,
     ) {
         this.jwtService = jwt;
         this.access = [];
+        this.searchResults = [];
+        this.searchLoading = false;
     }
 
     async login(username: string, password: string, remember: boolean): Promise<any>  {
         const result: any = await this.http
-            .post(`${config.API_URI}/login`, { username, password, remember })
+            .post(`${this.globalService.API_URI}/login`, { username, password, remember })
             .toPromise();
         this.jwt.token = result.token;
         localStorage.setItem('token', this.jwt.token);
@@ -43,7 +46,7 @@ export class UserService {
 
     async register(username: string, password: string): Promise<any>  {
         const result: any = await this.http
-            .post(`${config.API_URI}/register`, { username, password })
+            .post(`${this.globalService.API_URI}/register`, { username, password })
             .toPromise();
         this.jwt.token = result.token;
         localStorage.setItem('token', this.jwt.token);
@@ -52,20 +55,20 @@ export class UserService {
 
     async get() {
         this.user = await this.http
-            .get(`${config.API_URI}/user`)
+            .get(`${this.globalService.API_URI}/user`)
             .toPromise() as User;
         this.access = this.user.access;
     }
 
     put(user: User) {
         return this.http
-            .put(`${config.API_URI}/admin/user/${user.username}`, user)
+            .put(`${this.globalService.API_URI}/admin/user/${user.username}`, user)
             .toPromise() as Promise<User>;
     }
 
     getAll() {
         return this.http
-            .get(`${config.API_URI}/users`)
+            .get(`${this.globalService.API_URI}/users`)
             .toPromise() as Promise<User[]>;
     }
 
@@ -73,7 +76,7 @@ export class UserService {
         const params = new HttpParams()
             .set('key', key);
         const result = await this.http
-            .get(`${config.API_URI}/users-search`, { params })
+            .get(`${this.globalService.API_URI}/users-search`, { params })
             .toPromise() as User[];
         this.searchResults = result.map(user => ({
             ...user,

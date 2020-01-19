@@ -15,6 +15,7 @@ import { HttpInterceptorService } from './http-interceptor.service';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { ActiveUsersComponent } from './active-users/active-users.component';
 import { SearchUsersComponent } from './search-users/search-users.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { SearchUsersComponent } from './search-users/search-users.component';
         SignupComponent,
         RecoverPasswordComponent,
         ActiveUsersComponent,
-        SearchUsersComponent
+        SearchUsersComponent,
+        AlertComponent
     ],
     imports: [
         BrowserModule,

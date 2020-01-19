@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { AlertService, Alerts } from '../alert.service';
 import { Access } from '../../enums/access';
 import * as _ from 'lodash';
 
@@ -16,6 +17,7 @@ export class SearchUsersComponent {
     constructor(
         private userService: UserService,
         private router: Router,
+        private alertService: AlertService,
     ) {
         this.updating = false;
     }
@@ -37,8 +39,8 @@ export class SearchUsersComponent {
             await this.userService.put(payload);
             this.updating = false;
         } catch (err) {
-            console.error(err);
             this.updating = false;
+            this.alertService.openAlert('', err.error.message, Alerts.DANGER);
         }
     }
 

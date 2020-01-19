@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { AlertService, Alerts } from '../alert.service';
 
 @Component({
     selector: 'app-signup',
@@ -22,6 +23,7 @@ export class SignupComponent implements OnInit {
     constructor(
         private userService: UserService,
         private router: Router,
+        private alertService: AlertService,
     ) {
         this.loading = false;
     }
@@ -44,7 +46,7 @@ export class SignupComponent implements OnInit {
         } catch (err) {
             this.loading = false;
             console.error(err);
-            // this.alertService.openAlert('', err.message, Alerts.DANGER);
+            this.alertService.openAlert('', err.error.message, Alerts.DANGER);
         }
 
     }
