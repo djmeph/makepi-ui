@@ -16,6 +16,7 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
 import { ActiveUsersComponent } from './active-users/active-users.component';
 import { SearchUsersComponent } from './search-users/search-users.component';
 import { AlertComponent } from './alert/alert.component';
+import { RecoverCodeComponent } from './recover-code/recover-code.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { AlertComponent } from './alert/alert.component';
         RecoverPasswordComponent,
         ActiveUsersComponent,
         SearchUsersComponent,
-        AlertComponent
+        AlertComponent,
+        RecoverCodeComponent
     ],
     imports: [
         BrowserModule,

@@ -43,10 +43,9 @@ export class LoginComponent implements OnInit {
         const remember = !!this.loginForm.get('remember').value;
         try {
             await this.userService.login(username, password, remember);
-            this.router.navigate(['/dashboard']);
             this.loading = false;
+            this.router.navigate(['/dashboard']);
         } catch (err) {
-            console.error(err);
             this.loading = false;
             this.alertService.openAlert('', err.error.message, Alerts.DANGER);
         }

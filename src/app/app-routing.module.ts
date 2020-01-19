@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
+import { RecoverCodeComponent } from './recover-code/recover-code.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ActiveUsersComponent } from './active-users/active-users.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'recover-password', component: RecoverPasswordComponent },
+    { path: 'recover-code/:email', component: RecoverCodeComponent },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     {
         path: 'active-users',

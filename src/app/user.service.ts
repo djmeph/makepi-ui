@@ -91,4 +91,16 @@ export class UserService {
     getAccess(access: Access[]): boolean {
         return _.some(access, n => this.access.indexOf(n) >= 0);
     }
+
+    recoverCode(username: string) {
+        return this.http
+            .post(`${this.globalService.API_URI}/recover-code`, { username })
+            .toPromise() as Promise<any>;
+    }
+
+    recoverReset(username: string, recoverCode: string, password: string) {
+        return this.http
+            .post(`${this.globalService.API_URI}/recover-reset`, { username, recoverCode, password })
+            .toPromise() as Promise<any>;
+    }
 }
