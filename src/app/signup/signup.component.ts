@@ -45,7 +45,6 @@ export class SignupComponent implements OnInit {
             this.router.navigate(['/dashboard']);
         } catch (err) {
             this.loading = false;
-            console.error(err);
             this.alertService.openAlert('', err.error.message, Alerts.DANGER);
         }
 

@@ -73,7 +73,6 @@ export class TopNavComponent implements OnInit {
                 this.userService.searchLoading = false;
             }
         } catch (err) {
-            console.error(err);
             this.userService.searchLoading = false;
         }
     }

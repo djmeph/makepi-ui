@@ -78,7 +78,6 @@ export class ActiveUsersComponent implements OnInit {
         this.loading = true;
         try {
             const result = await this.userService.getPage(this.lastEvaluatedKey) as any;
-            console.log(result);
             const newBatch = result.items.map(user => ({
                 ...user,
                 access: {
@@ -92,7 +91,7 @@ export class ActiveUsersComponent implements OnInit {
             this.loading = false;
         } catch (err) {
             this.loading = false;
-            console.error(err);
+            this.alertService.openAlert('', err.error.message, Alerts.DANGER);
         }
     }
 
