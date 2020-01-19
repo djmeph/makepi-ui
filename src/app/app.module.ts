@@ -13,6 +13,8 @@ import { SignupComponent } from './signup/signup.component';
 
 import { HttpInterceptorService } from './http-interceptor.service';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
+import { ActiveUsersComponent } from './active-users/active-users.component';
+import { SearchUsersComponent } from './search-users/search-users.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +24,9 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
         DashboardComponent,
         TopNavComponent,
         SignupComponent,
-        RecoverPasswordComponent
+        RecoverPasswordComponent,
+        ActiveUsersComponent,
+        SearchUsersComponent
     ],
     imports: [
         BrowserModule,

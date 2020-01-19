@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JwtService } from '../jwt.service';
+import { UserService } from '../user.service';
 import { Pages } from '../../enums/pages';
+import { Access } from '../../enums/access';
 import * as config from 'config.json';
 
 @Component({
@@ -9,18 +10,25 @@ import * as config from 'config.json';
     templateUrl: './top-nav.component.html',
     styleUrls: ['./top-nav.component.scss']
 })
-export class TopNavComponent {
+export class TopNavComponent implements OnInit {
 
     hamburger: boolean;
     pages = Pages;
     config = config;
+    access: any;
+    timer: any;
 
     constructor(
         private router: Router,
         public route: ActivatedRoute,
-        public jwtService: JwtService,
+        public userService: UserService,
     ) {
         this.hamburger = false;
+        this.access = Access;
+    }
+
+    ngOnInit() {
+        this.userService.searchForm.get('key').valueChanges.subscribe((val) => this.onSearchChange(val));
     }
 
     expandMenu() {
@@ -37,9 +45,37 @@ export class TopNavComponent {
     }
 
     logout() {
-        delete this.jwtService.token;
+        delete this.userService.jwtService.token;
+        delete this.userService.user;
+        this.userService.access = [];
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
+    }
+
+    onSearchChange(key: string) {
+        if (this.timer) {
+            clearTimeout(this.timer);
+        }
+        this.timer = setTimeout(() => this.search(key), 250);
+    }
+
+    async searchKey() {
+        const key = this.userService.searchForm.get('key').value;
+        await this.search(key);
+    }
+
+    async search(key: string) {
+        try {
+            if (key.length >= 3) {
+                this.router.navigate(['/search-users']);
+                this.userService.searchLoading = true;
+                await this.userService.search(key);
+                this.userService.searchLoading = false;
+            }
+        } catch (err) {
+            console.error(err);
+            this.userService.searchLoading = false;
+        }
     }
 
 }

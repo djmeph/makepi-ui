@@ -5,18 +5,25 @@
     </button>
     <div class="collapse navbar-collapse" [ngClass]="{ 'show': hamburger }">
         <ul class="navbar-nav mr-auto">
-            <li *ngIf="jwtService.token" (click)="nav(pages.DASHBOARD)" class="nav-item" [ngClass]="{ 'active': getPage(pages.DASHBOARD) }">
+            <li *ngIf="userService.jwtService.token" (click)="nav(pages.DASHBOARD)" class="nav-item" [ngClass]="{ 'active': getPage(pages.DASHBOARD) }">
                 <button class="nav-link btn btn-link">Dashboard</button>
             </li>
+            <li *ngIf="userService.jwtService.token && userService.getAccess([access.ADMIN, access.KEYMASTER])" (click)="nav(pages.ACTIVE_USERS)" class="nav-item" [ngClass]="{ 'active': getPage(pages.ACTIVE_USERS) }">
+                <button class="nav-link btn btn-link">Active Users</button>
+            </li>
         </ul>
+        <form *ngIf="userService.getAccess([access.ADMIN, access.KEYMASTER])" class="form-inline my-2 my-lg-0" [formGroup]="userService.searchForm" (ngSubmit)="searching || searchKey()">
+            <input class="form-control mr-sm-2" formControlName="key" type="search" placeholder="Member Search">
+            <button type="submit" [disabled]="userService.searchForm.invalid" class="btn btn-outline-success my-2 my-sm-0">Search</button>
+        </form>
         <ul class="navbar-nav my-2 my-lg-0">
-            <li *ngIf="!jwtService.token" (click)="nav(pages.LOGIN)" class="nav-item" [ngClass]="{ 'active': getPage(pages.LOGIN) }">
+            <li *ngIf="!userService.jwtService.token" (click)="nav(pages.LOGIN)" class="nav-item" [ngClass]="{ 'active': getPage(pages.LOGIN) }">
                 <button class="nav-link btn btn-link">Login</button>
             </li>
-            <li *ngIf="!jwtService.token" (click)="nav(pages.SIGNUP)" class="nav-item" [ngClass]="{ 'active': getPage(pages.SIGNUP) }">
+            <li *ngIf="!userService.jwtService.token" (click)="nav(pages.SIGNUP)" class="nav-item" [ngClass]="{ 'active': getPage(pages.SIGNUP) }">
                 <button class="nav-link btn btn-link">Register</button>
             </li>
-            <li *ngIf="jwtService.token" (click)="logout()" class="nav-item">
+            <li *ngIf="userService.jwtService.token" (click)="logout()" class="nav-item">
                 <button class="nav-link btn btn-link">Logout</button>
             </li>
         </ul>
