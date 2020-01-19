@@ -17,6 +17,7 @@ export class ActiveUsersComponent implements OnInit {
 
     updating: boolean;
     loading: boolean;
+    lastEvaluatedKey: any;
 
     constructor(
         private userService: UserService,
@@ -30,8 +31,9 @@ export class ActiveUsersComponent implements OnInit {
     async ngOnInit() {
         try {
             this.loading = true;
-            const { items } = await this.userService.getAll() as any;
-            this.users = items.map(user => ({
+            const result = await this.userService.getAll() as any;
+            this.lastEvaluatedKey = result.lastEvaluatedKey;
+            this.users = result.items.map(user => ({
                 ...user,
                 access: {
                     ADMIN: user.access && user.access.indexOf(Access.ADMIN) >= 0,
@@ -66,6 +68,31 @@ export class ActiveUsersComponent implements OnInit {
         } catch (err) {
             this.updating = false;
             this.alertService.openAlert('', err.error.message, Alerts.DANGER);
+        }
+    }
+
+    async onScroll() {
+        if (!this.lastEvaluatedKey) {
+            return;
+        }
+        this.loading = true;
+        try {
+            const result = await this.userService.getPage(this.lastEvaluatedKey) as any;
+            console.log(result);
+            const newBatch = result.items.map(user => ({
+                ...user,
+                access: {
+                    ADMIN: user.access && user.access.indexOf(Access.ADMIN) >= 0,
+                    KEYMASTER: user.access && user.access.indexOf(Access.KEYMASTER) >= 0,
+                    MEMBER: user.access && user.access.indexOf(Access.MEMBER) >= 0
+                }
+            })) as User[];
+            this.users = _.concat(this.users, newBatch);
+            this.lastEvaluatedKey = result.lastEvaluatedKey;
+            this.loading = false;
+        } catch (err) {
+            this.loading = false;
+            console.error(err);
         }
     }
 

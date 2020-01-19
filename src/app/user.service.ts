@@ -72,6 +72,16 @@ export class UserService {
             .toPromise() as Promise<User[]>;
     }
 
+    getPage(lastEvaluatedKey) {
+        const params = new HttpParams()
+            .set('userId', lastEvaluatedKey.userId)
+            .set('itemKey', lastEvaluatedKey.itemKey)
+            .set('active', lastEvaluatedKey.active);
+        return this.http
+            .get(`${this.globalService.API_URI}/users`, { params })
+            .toPromise();
+    }
+
     async search(key: string) {
         const params = new HttpParams()
             .set('key', key);
