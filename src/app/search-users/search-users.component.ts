@@ -15,7 +15,7 @@ export class SearchUsersComponent {
     updating: boolean;
 
     constructor(
-        private userService: UserService,
+        public userService: UserService,
         private router: Router,
         private alertService: AlertService,
     ) {

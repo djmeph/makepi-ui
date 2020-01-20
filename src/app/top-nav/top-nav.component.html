@@ -12,7 +12,7 @@
                 <button class="nav-link btn btn-link">Active Users</button>
             </li>
         </ul>
-        <form *ngIf="userService.getAccess([access.ADMIN, access.KEYMASTER])" class="form-inline my-2 my-lg-0" [formGroup]="userService.searchForm" (ngSubmit)="searching || searchKey()">
+        <form *ngIf="userService.getAccess([access.ADMIN, access.KEYMASTER])" class="form-inline my-2 my-lg-0" [formGroup]="userService.searchForm" (ngSubmit)="userService.searchLoading || searchKey()">
             <input class="form-control mr-sm-2" formControlName="key" type="search" placeholder="Member Search">
             <button type="submit" [disabled]="userService.searchForm.invalid" class="btn btn-outline-success my-2 my-sm-0">Search</button>
         </form>
