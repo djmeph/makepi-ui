@@ -14,7 +14,10 @@ export class AccessGuardService implements CanActivate {
         private router: Router,
     ) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    canActivate(
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ): Observable<boolean> | Promise<boolean> | boolean {
         if (this.userService.getAccess(route.data.roles)) {
             return true;
         } else {

@@ -11,10 +11,8 @@ import * as _ from 'lodash';
     styleUrls: ['./active-users.component.scss']
 })
 export class ActiveUsersComponent implements OnInit {
-
     users: any;
     access: any;
-
     updating: boolean;
     loading: boolean;
     lastEvaluatedKey: any;

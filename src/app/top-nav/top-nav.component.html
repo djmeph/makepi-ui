@@ -8,8 +8,12 @@
             <li *ngIf="userService.jwtService.token" (click)="nav(pages.DASHBOARD)" class="nav-item" [ngClass]="{ 'active': getPage(pages.DASHBOARD) }">
                 <button class="nav-link btn btn-link">Dashboard</button>
             </li>
-            <li *ngIf="userService.jwtService.token && userService.getAccess([access.ADMIN, access.KEYMASTER])" (click)="nav(pages.ACTIVE_USERS)" class="nav-item" [ngClass]="{ 'active': getPage(pages.ACTIVE_USERS) || getPage(pages.SEARCH_USERS) }">
-                <button class="nav-link btn btn-link">Active Users</button>
+            <li *ngIf="userService.jwtService.token && userService.getAccess([access.ADMIN, access.KEYMASTER])" class="nav-item dropdown" [ngClass]="{ show: keymasterDrop }">
+                <button (click)="toggleKeymasterDrop()" class="nav-link dropdown-toggle btn btn-link" role="button" [ngClass]="{ 'active': getPage(pages.ACTIVE_USERS) || getPage(pages.ACTIVE_MEMBERS) || getPage(pages.SEARCH_USERS) }">Admin</button>
+                <div class="dropdown-menu" [ngClass]="{ show: keymasterDrop }">
+                    <button (click)="nav(pages.ACTIVE_MEMBERS)" class="dropdown-item btn btn-link" [ngClass]="{ 'active': getPage(pages.ACTIVE_MEMBERS) }">Active Members</button>
+                    <button (click)="nav(pages.ACTIVE_USERS)" class="dropdown-item btn btn-link" [ngClass]="{ 'active': getPage(pages.ACTIVE_USERS) || getPage(pages.SEARCH_USERS) }">Active Users</button>
+                </div>
             </li>
         </ul>
         <form *ngIf="userService.getAccess([access.ADMIN, access.KEYMASTER])" class="form-inline my-2 my-lg-0" [formGroup]="userService.searchForm" (ngSubmit)="userService.searchLoading || searchKey()">

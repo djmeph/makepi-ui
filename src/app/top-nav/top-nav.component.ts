@@ -16,6 +16,7 @@ export class TopNavComponent implements OnInit {
     pages = Pages;
     access: any;
     timer: any;
+    keymasterDrop: boolean;
 
     constructor(
         private router: Router,
@@ -24,6 +25,7 @@ export class TopNavComponent implements OnInit {
         public globalService: GlobalService,
     ) {
         this.hamburger = false;
+        this.keymasterDrop = false;
         this.access = Access;
     }
 
@@ -37,6 +39,7 @@ export class TopNavComponent implements OnInit {
 
     nav(page: string) {
         this.hamburger = false;
+        this.keymasterDrop = false;
         this.router.navigate([`/${page}`]);
     }
 
@@ -75,6 +78,10 @@ export class TopNavComponent implements OnInit {
         } catch (err) {
             this.userService.searchLoading = false;
         }
+    }
+
+    toggleKeymasterDrop() {
+        this.keymasterDrop = !this.keymasterDrop;
     }
 
 }

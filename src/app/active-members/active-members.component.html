@@ -1,0 +1,21 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Admin</th>
+            <th scope="col">Keymaster</th>
+            <th scope="col">Member</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let member of members">
+            <td>{{ member.user.username }}</td>
+            <td><input type="checkbox" [(ngModel)]="member.access.ADMIN" (change)="changeRole(member.user.username, member.access.ADMIN)" /></td>
+            <td><input type="checkbox" [(ngModel)]="member.access.KEYMASTER" (change)="changeRole(member.user.username, member.access.KEYMASTER)" /></td>
+            <td><input type="checkbox" [(ngModel)]="member.access.MEMBER" (change)="changeRole(member.user.username, member.access.MEMBER)" /></td>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="loading" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>

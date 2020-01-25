@@ -113,4 +113,10 @@ export class UserService {
             .post(`${this.globalService.API_URI}/recover-reset`, { username, recoverCode, password })
             .toPromise() as Promise<any>;
     }
+
+    getMembers() {
+        return this.http
+            .get(`${this.globalService.API_URI}/admin/subscriptions/latest`)
+            .toPromise() as Promise<any>;
+    }
 }
