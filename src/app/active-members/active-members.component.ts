@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { AdminUserService } from '../admin-user.service';
 import { AlertService, Alerts } from '../alert.service';
 import { User } from '../../models/user';
 import { Access } from '../../enums/access';
@@ -18,7 +18,7 @@ export class ActiveMembersComponent implements OnInit {
     lastEvaluatedKey: any;
 
     constructor(
-        private userService: UserService,
+        private adminUserService: AdminUserService,
         private alertService: AlertService,
     ) {
         this.members = [];
@@ -29,7 +29,7 @@ export class ActiveMembersComponent implements OnInit {
     async ngOnInit() {
         try {
             this.loading = true;
-            const result = await this.userService.getMembers() as any;
+            const result = await this.adminUserService.getMembers() as any;
             this.lastEvaluatedKey = result.lastEvaluatedKey;
             this.members = result.map(member => ({
                 ...member,
@@ -61,7 +61,7 @@ export class ActiveMembersComponent implements OnInit {
         });
         const payload = { ...user, access };
         try {
-            await this.userService.put(payload);
+            await this.adminUserService.put(payload);
             this.updating = false;
         } catch (err) {
             this.updating = false;

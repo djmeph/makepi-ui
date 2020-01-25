@@ -19,6 +19,7 @@ import { SearchUsersComponent } from './search-users/search-users.component';
 import { AlertComponent } from './alert/alert.component';
 import { RecoverCodeComponent } from './recover-code/recover-code.component';
 import { ActiveMembersComponent } from './active-members/active-members.component';
+import { AddMemberComponent } from './add-member/add-member.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { ActiveMembersComponent } from './active-members/active-members.componen
         SearchUsersComponent,
         AlertComponent,
         RecoverCodeComponent,
-        ActiveMembersComponent
+        ActiveMembersComponent,
+        AddMemberComponent
     ],
     imports: [
         BrowserModule,

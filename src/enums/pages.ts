@@ -6,4 +6,5 @@ export enum Pages {
     ACTIVE_USERS = 'active-users',
     SEARCH_USERS = 'search-users',
     ACTIVE_MEMBERS = 'active-members',
+    ADD_MEMBER = 'add-member',
 }

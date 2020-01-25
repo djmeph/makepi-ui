@@ -8,21 +8,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngIf="userService.searchResults.length">
-            <td colspan="4"><em>{{userService.searchResults.length}} result<span *ngIf="userService.searchResults.length > 1">s</span> found for &quot;{{userService.searchForm.get('key').value}}&quot;</em></td>
+        <tr *ngIf="adminUserService.searchResults.length">
+            <td colspan="4"><em>{{adminUserService.searchResults.length}} result<span *ngIf="adminUserService.searchResults.length > 1">s</span> found for &quot;{{adminUserService.searchForm.get('key').value}}&quot;</em></td>
         </tr>
-        <tr *ngFor="let user of userService.searchResults">
+        <tr *ngFor="let user of adminUserService.searchResults">
             <td>{{ user.username }}</td>
             <td><input type="checkbox" [(ngModel)]="user.access.ADMIN" (change)="changeRole(user.username, user.access.ADMIN)" /></td>
             <td><input type="checkbox" [(ngModel)]="user.access.KEYMASTER" (change)="changeRole(user.username, user.access.KEYMASTER)" /></td>
             <td><input type="checkbox" [(ngModel)]="user.access.MEMBER" (change)="changeRole(user.username, user.access.MEMBER)" /></td>
         </tr>
-        <tr *ngIf="!userService.searchResults.length">
-            <td colspan="4"><em>No results found for &quot;{{userService.searchForm.get('key').value}}&quot;</em></td>
+        <tr *ngIf="!adminUserService.searchResults.length">
+            <td colspan="4"><em>No results found for &quot;{{adminUserService.searchForm.get('key').value}}&quot;</em></td>
         </tr>
     </tbody>
 </table>
-<div *ngIf="userService.searchLoading" class="spinner-border" role="status">
+<div *ngIf="adminUserService.searchLoading" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
 </div>
 <button class="btn btn-light" (click)="clear()">Clear Search Results</button>

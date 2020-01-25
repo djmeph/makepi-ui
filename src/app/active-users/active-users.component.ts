@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { AdminUserService } from '../admin-user.service';
 import { AlertService, Alerts } from '../alert.service';
 import { User } from '../../models/user';
 import { Access } from '../../enums/access';
@@ -18,8 +18,8 @@ export class ActiveUsersComponent implements OnInit {
     lastEvaluatedKey: any;
 
     constructor(
-        private userService: UserService,
         private alertService: AlertService,
+        private adminUserService: AdminUserService,
     ) {
         this.users = [];
         this.access = Access;
@@ -29,7 +29,7 @@ export class ActiveUsersComponent implements OnInit {
     async ngOnInit() {
         try {
             this.loading = true;
-            const result = await this.userService.getAll() as any;
+            const result = await this.adminUserService.getAll() as any;
             this.lastEvaluatedKey = result.lastEvaluatedKey;
             this.users = result.items.map(user => ({
                 ...user,
@@ -61,7 +61,7 @@ export class ActiveUsersComponent implements OnInit {
         });
         const payload = { ...user, access };
         try {
-            await this.userService.put(payload);
+            await this.adminUserService.put(payload);
             this.updating = false;
         } catch (err) {
             this.updating = false;
@@ -75,7 +75,7 @@ export class ActiveUsersComponent implements OnInit {
         }
         this.loading = true;
         try {
-            const result = await this.userService.getPage(this.lastEvaluatedKey) as any;
+            const result = await this.adminUserService.getPage(this.lastEvaluatedKey) as any;
             const newBatch = result.items.map(user => ({
                 ...user,
                 access: {

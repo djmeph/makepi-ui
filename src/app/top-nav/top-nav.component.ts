@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { AdminUserService } from '../admin-user.service';
 import { GlobalService } from '../global.service';
 import { Pages } from '../../enums/pages';
 import { Access } from '../../enums/access';
@@ -22,6 +23,7 @@ export class TopNavComponent implements OnInit {
         private router: Router,
         public route: ActivatedRoute,
         public userService: UserService,
+        private adminUserService: AdminUserService,
         public globalService: GlobalService,
     ) {
         this.hamburger = false;
@@ -30,7 +32,7 @@ export class TopNavComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.searchForm.get('key').valueChanges.subscribe((val) => this.onSearchChange(val));
+        this.adminUserService.searchForm.get('key').valueChanges.subscribe((val) => this.onSearchChange(val));
     }
 
     expandMenu() {
@@ -63,7 +65,7 @@ export class TopNavComponent implements OnInit {
     }
 
     async searchKey() {
-        const key = this.userService.searchForm.get('key').value;
+        const key = this.adminUserService.searchForm.get('key').value;
         await this.search(key);
     }
 
@@ -71,12 +73,12 @@ export class TopNavComponent implements OnInit {
         try {
             if (key.length >= 3) {
                 this.router.navigate(['/search-users']);
-                this.userService.searchLoading = true;
-                await this.userService.search(key);
-                this.userService.searchLoading = false;
+                this.adminUserService.searchLoading = true;
+                await this.adminUserService.search(key);
+                this.adminUserService.searchLoading = false;
             }
         } catch (err) {
-            this.userService.searchLoading = false;
+            this.adminUserService.searchLoading = false;
         }
     }
 

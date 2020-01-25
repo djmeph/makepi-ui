@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { AdminUserService } from '../admin-user.service';
 import { AlertService, Alerts } from '../alert.service';
 import { Access } from '../../enums/access';
 import * as _ from 'lodash';
@@ -16,6 +17,7 @@ export class SearchUsersComponent {
 
     constructor(
         public userService: UserService,
+        public adminUserService: AdminUserService,
         private router: Router,
         private alertService: AlertService,
     ) {
@@ -27,7 +29,7 @@ export class SearchUsersComponent {
             await new Promise(resolve => setTimeout(resolve, 50));
         }
         this.updating = true;
-        const [user] = _.filter(this.userService.searchResults, { username });
+        const [user] = _.filter(this.adminUserService.searchResults, { username });
         const access = [];
         Object.keys(user.access).forEach(key => {
             if (user.access[key]) {
@@ -36,7 +38,7 @@ export class SearchUsersComponent {
         });
         const payload = { ...user, access };
         try {
-            await this.userService.put(payload);
+            await this.adminUserService.put(payload);
             this.updating = false;
         } catch (err) {
             this.updating = false;
@@ -45,8 +47,8 @@ export class SearchUsersComponent {
     }
 
     clear() {
-        this.userService.searchResults = [];
-        this.userService.searchForm.patchValue({ key: '' });
+        this.adminUserService.searchResults = [];
+        this.adminUserService.searchForm.patchValue({ key: '' });
         this.router.navigate(['/active-users']);
     }
 

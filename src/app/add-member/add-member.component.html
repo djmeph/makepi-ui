@@ -1,0 +1,41 @@
+<h1 class="page-title">Add New Member</h1>
+<form [formGroup]="memberForm" (ngSubmit)="loading || save()">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Contact</h5>
+            <label>First Name</label>
+            <input type="text" formControlName="primaryFirstName" class="form-control usgm-input" />
+            <label>Middle Name</label>
+            <input type="text" formControlName="primaryMiddleName" class="form-control usgm-input" />
+            <label>Last Name</label>
+            <input type="text" formControlName="primaryLastName" class="form-control usgm-input" />
+            <label>Email</label>
+            <input type="text" formControlName="primaryEmail" class="form-control usgm-input" />
+            <label>Phone</label>
+            <input type="text" formControlName="primaryPhone" class="form-control usgm-input" />
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Emergency Contact</h5>
+            <label>First Name</label>
+            <input type="text" formControlName="emergencyFirstName" class="form-control usgm-input" />
+            <label>Middle Name</label>
+            <input type="text" formControlName="emergencyMiddleName" class="form-control usgm-input">
+            <label>Last Name</label>
+            <input type="text" formControlName="emergencyMiddleName" class="form-control usgm-input">
+            <label>Phone</label>
+            <input type="text" formControlName="emergencyPhone" class="form-control usgm-input" />
+            <label>Relation</label>
+            <input type="text" formControlName="emergencyRelation" class="form-control usgm-input" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-6 pt-2">
+            <button *ngIf="!loading" type="submit" [disabled]="memberForm.invalid" class="btn btn-light">Save</button>
+            <div *ngIf="loading" class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+</form>
