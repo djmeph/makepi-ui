@@ -2,10 +2,10 @@
     <thead>
         <tr>
             <th scope="col">Username</th>
-            <th scope="col">Admin</th>
-            <th scope="col">Keymaster</th>
-            <th scope="col">Member</th>
-            <th scope="col">Onboarding</th>
+            <th scope="col" class="text-right">Admin</th>
+            <th scope="col" class="text-right">Keymaster</th>
+            <th scope="col" class="text-right">Member</th>
+            <th scope="col" class="text-right">Onboarding</th>
         </tr>
     </thead>
     <tbody>
@@ -14,10 +14,10 @@
         </tr>
         <tr *ngFor="let user of adminUserService.searchResults">
             <td>{{ user.username }}</td>
-            <td><input type="checkbox" [(ngModel)]="user.access.ADMIN" (change)="changeRole(user.username, user.access.ADMIN)" /></td>
-            <td><input type="checkbox" [(ngModel)]="user.access.KEYMASTER" (change)="changeRole(user.username, user.access.KEYMASTER)" /></td>
-            <td><input type="checkbox" [(ngModel)]="user.access.MEMBER" (change)="changeRole(user.username, user.access.MEMBER)" /></td>
-            <td><input type="checkbox" [(ngModel)]="user.access.ONBOARDING" (change)="changeRole(user.username, user.access.ONBOARDING)" /></td>
+            <td class="text-right"><input type="checkbox" [(ngModel)]="user.access.ADMIN" (change)="changeRole(user.username, user.access.ADMIN)" /></td>
+            <td class="text-right"><input type="checkbox" [(ngModel)]="user.access.KEYMASTER" (change)="changeRole(user.username, user.access.KEYMASTER)" /></td>
+            <td class="text-right"><input type="checkbox" [(ngModel)]="user.access.MEMBER" (change)="changeRole(user.username, user.access.MEMBER)" /></td>
+            <td class="text-right"><input type="checkbox" [(ngModel)]="user.access.ONBOARDING" (change)="changeRole(user.username, user.access.ONBOARDING)" /></td>
         </tr>
         <tr *ngIf="!adminUserService.searchResults.length">
             <td colspan="4"><em>No results found for &quot;{{adminUserService.searchForm.get('key').value}}&quot;</em></td>
