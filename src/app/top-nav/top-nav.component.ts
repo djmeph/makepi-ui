@@ -23,7 +23,7 @@ export class TopNavComponent implements OnInit {
         private router: Router,
         public route: ActivatedRoute,
         public userService: UserService,
-        private adminUserService: AdminUserService,
+        public adminUserService: AdminUserService,
         public globalService: GlobalService,
     ) {
         this.hamburger = false;
