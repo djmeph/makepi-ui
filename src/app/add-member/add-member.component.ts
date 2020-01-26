@@ -73,18 +73,18 @@ export class AddMemberComponent implements OnInit {
             userPayload.access.push(Access.ONBOARDING);
         }
         const primaryContactPayload = {
-            firstName: this.memberForm.get('primaryFirstName').value,
-            middleName: this.memberForm.get('primaryMiddleName').value,
-            lastName: this.memberForm.get('primaryLastName').value,
-            email: this.memberForm.get('primaryEmail').value,
-            phone: this.memberForm.get('primaryPhone').value,
+            firstName: this.memberForm.get('primaryFirstName').value || null,
+            middleName: this.memberForm.get('primaryMiddleName').value || null,
+            lastName: this.memberForm.get('primaryLastName').value || null,
+            email: this.memberForm.get('primaryEmail').value || null,
+            phone: this.memberForm.get('primaryPhone').value || null,
         };
         const emergencyContactPayload = {
-            firstName: this.memberForm.get('emergencyFirstName').value,
-            middleName: this.memberForm.get('emergencyMiddleName').value,
-            lastName: this.memberForm.get('emergencyLastName').value,
-            phone: this.memberForm.get('emergencyPhone').value,
-            relation: this.memberForm.get('emergencyRelation').value,
+            firstName: this.memberForm.get('emergencyFirstName').value || null,
+            middleName: this.memberForm.get('emergencyMiddleName').value || null,
+            lastName: this.memberForm.get('emergencyLastName').value || null,
+            phone: this.memberForm.get('emergencyPhone').value || null,
+            relation: this.memberForm.get('emergencyRelation').value || null,
         };
 
         try {
