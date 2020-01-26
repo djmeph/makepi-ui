@@ -31,6 +31,12 @@ export class AdminUserService {
             .toPromise() as Promise<User>;
     }
 
+    post(user: User) {
+        return this.http
+            .post(`${this.globalService.API_URI}/admin/users`, user)
+            .toPromise() as Promise<User>;
+    }
+
     getAll() {
         return this.http
             .get(`${this.globalService.API_URI}/admin/users`)
@@ -69,7 +75,7 @@ export class AdminUserService {
             .toPromise() as Promise<any>;
     }
 
-    randomCodeGenerator(stringLength: number) {
+    randomCodeGenerator(stringLength: number): string {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
         let charCount = 0;
         let numCount = 0;
@@ -86,5 +92,7 @@ export class AdminUserService {
                 charCount += 1;
             }
         }
+
+        return randomstring;
     }
 }

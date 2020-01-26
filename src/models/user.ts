@@ -1,7 +1,7 @@
 export class User {
+    userId?: string;
     access: number[];
-    active: boolean;
-    createdAt: string;
-    updatedAt: string;
+    active: number;
     username: string;
+    verificationCode?: string;
 }

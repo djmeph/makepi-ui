@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AdminUserService } from '../admin-user.service';
+import { AdminContactService } from '../admin-contact.service';
+import { AlertService, Alerts } from '../alert.service';
+import { User } from '../../models/user';
+import { ContactTypes } from '../../enums/contact-types';
 
 @Component({
     selector: 'app-add-member',
@@ -25,7 +30,10 @@ export class AddMemberComponent implements OnInit {
     });
 
     constructor(
+        private adminContactService: AdminContactService,
         private adminUserService: AdminUserService,
+        private router: Router,
+        private alertService: AlertService,
     ) {
         this.loading = false;
     }
@@ -39,7 +47,7 @@ export class AddMemberComponent implements OnInit {
             return;
         }
         this.loading = true;
-        const userPayload = {
+        const userPayload: User = {
             username: this.memberForm.get('primaryEmail').value,
             access: [],
             active: 1,
@@ -59,6 +67,17 @@ export class AddMemberComponent implements OnInit {
             phone: this.memberForm.get('emergencyPhone').value,
             relation: this.memberForm.get('emergencyRelation').value,
         };
+
+        try {
+            const user = await this.adminUserService.post(userPayload);
+            await this.adminContactService.post(primaryContactPayload, user.userId, ContactTypes.PRIMARY);
+            await this.adminContactService.post(emergencyContactPayload, user.userId, ContactTypes.EMERGENCY);
+            this.loading = false;
+            this.router.navigate(['/active-users']);
+        } catch (err) {
+            this.loading = false;
+            this.alertService.openAlert('', err.error.message, Alerts.DANGER);
+        }
 
     }
 
