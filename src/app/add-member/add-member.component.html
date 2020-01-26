@@ -2,7 +2,7 @@
 <form [formGroup]="memberForm" (ngSubmit)="loading || save()">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Add Contact</h5>
+            <h5 class="card-title">Primary Contact</h5>
             <label>First Name</label>
             <input type="text" formControlName="primaryFirstName" class="form-control usgm-input" />
             <label>Middle Name</label>
@@ -13,6 +13,27 @@
             <input type="text" formControlName="primaryEmail" class="form-control usgm-input" />
             <label>Phone</label>
             <input type="text" formControlName="primaryPhone" class="form-control usgm-input" />
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Roles</h5>
+            <div (click)="toggleRole('rolesAdmin')" class="custom-control custom-checkbox">
+                <input formControlName="rolesAdmin" type="checkbox" class="custom-control-input" />
+                <label class="custom-control-label">Admin</label>
+            </div>
+            <div (click)="toggleRole('rolesMember')" class="custom-control custom-checkbox">
+                <input formControlName="rolesMember" type="checkbox" class="custom-control-input" />
+                <label class="custom-control-label">Member</label>
+            </div>
+            <div (click)="toggleRole('rolesKeymaster')" class="custom-control custom-checkbox">
+                <input formControlName="rolesKeymaster" type="checkbox" class="custom-control-input" />
+                <label class="custom-control-label">Keymaster</label>
+            </div>
+            <div (click)="toggleRole('rolesOnboarding')" class="custom-control custom-checkbox">
+                <input formControlName="rolesOnboarding" type="checkbox" class="custom-control-input" />
+                <label class="custom-control-label">Onboarding</label>
+            </div>
         </div>
     </div>
     <div class="card">

@@ -36,7 +36,8 @@ export class ActiveMembersComponent implements OnInit {
                 access: {
                     ADMIN: member.user.access && member.user.access.indexOf(Access.ADMIN) >= 0,
                     KEYMASTER: member.user.access && member.user.access.indexOf(Access.KEYMASTER) >= 0,
-                    MEMBER: member.user.access && member.user.access.indexOf(Access.MEMBER) >= 0
+                    MEMBER: member.user.access && member.user.access.indexOf(Access.MEMBER) >= 0,
+                    ONBOARDING: member.user.access && member.user.access.indexOf(Access.ONBOARDING) >= 0,
                 }
             })) as User[];
             this.loading = false;
@@ -52,14 +53,14 @@ export class ActiveMembersComponent implements OnInit {
             await new Promise(resolve => setTimeout(resolve, 50));
         }
         this.updating = true;
-        const [user] = _.filter(this.members, { username });
+        const [member] = _.filter(this.members, n => n.user.username === username);
         const access = [];
-        Object.keys(user.access).forEach(key => {
-            if (user.access[key]) {
+        Object.keys(member.access).forEach(key => {
+            if (member.access[key]) {
                 access.push(Access[key]);
             }
         });
-        const payload = { ...user, access };
+        const payload = { ...member.user, access };
         try {
             await this.adminUserService.put(payload);
             this.updating = false;

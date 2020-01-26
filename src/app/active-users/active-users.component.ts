@@ -36,7 +36,8 @@ export class ActiveUsersComponent implements OnInit {
                 access: {
                     ADMIN: user.access && user.access.indexOf(Access.ADMIN) >= 0,
                     KEYMASTER: user.access && user.access.indexOf(Access.KEYMASTER) >= 0,
-                    MEMBER: user.access && user.access.indexOf(Access.MEMBER) >= 0
+                    MEMBER: user.access && user.access.indexOf(Access.MEMBER) >= 0,
+                    ONBOARDING: user.access && user.access.indexOf(Access.ONBOARDING) >= 0,
                 }
             })) as User[];
             this.loading = false;
@@ -81,7 +82,8 @@ export class ActiveUsersComponent implements OnInit {
                 access: {
                     ADMIN: user.access && user.access.indexOf(Access.ADMIN) >= 0,
                     KEYMASTER: user.access && user.access.indexOf(Access.KEYMASTER) >= 0,
-                    MEMBER: user.access && user.access.indexOf(Access.MEMBER) >= 0
+                    MEMBER: user.access && user.access.indexOf(Access.MEMBER) >= 0,
+                    ONBOARDING: user.access && user.access.indexOf(Access.ONBOARDING) >= 0,
                 }
             })) as User[];
             this.users = _.concat(this.users, newBatch);

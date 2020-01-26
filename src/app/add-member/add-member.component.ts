@@ -6,6 +6,7 @@ import { AdminContactService } from '../admin-contact.service';
 import { AlertService, Alerts } from '../alert.service';
 import { User } from '../../models/user';
 import { ContactTypes } from '../../enums/contact-types';
+import { Access } from 'src/enums/access';
 
 @Component({
     selector: 'app-add-member',
@@ -22,12 +23,17 @@ export class AddMemberComponent implements OnInit {
         primaryLastName: new FormControl(this.memberStatus.primaryLastName, [Validators.required]),
         primaryEmail: new FormControl(this.memberStatus.primaryEmail, [Validators.required, Validators.email]),
         primaryPhone: new FormControl(this.memberStatus.primaryPhone, [Validators.required]),
+        rolesAdmin: new FormControl(this.memberStatus.rolesAdmin),
+        rolesMember: new FormControl(this.memberStatus.rolesMember),
+        rolesKeymaster: new FormControl(this.memberStatus.rolesKeymaster),
+        rolesOnboarding: new FormControl(this.memberStatus.rolesOnboarding),
         emergencyFirstName: new FormControl(this.memberStatus.emergencyFirstName, [Validators.required]),
         emergencyMiddleName: new FormControl(this.memberStatus.emergencyMiddleName),
         emergencyLastName: new FormControl(this.memberStatus.emergencyLastName, [Validators.required]),
         emergencyPhone: new FormControl(this.memberStatus.emergencyPhone, [Validators.required]),
         emergencyRelation: new FormControl(this.memberStatus.emergencyRelation, [Validators.required]),
     });
+    roles: any;
 
     constructor(
         private adminContactService: AdminContactService,
@@ -36,6 +42,7 @@ export class AddMemberComponent implements OnInit {
         private alertService: AlertService,
     ) {
         this.loading = false;
+        this.roles = {};
     }
 
     ngOnInit() {
@@ -53,6 +60,18 @@ export class AddMemberComponent implements OnInit {
             active: 1,
             verificationCode: this.adminUserService.randomCodeGenerator(16)
         };
+        if (this.memberForm.get('rolesAdmin').value) {
+            userPayload.access.push(Access.ADMIN);
+        }
+        if (this.memberForm.get('rolesMember').value) {
+            userPayload.access.push(Access.MEMBER);
+        }
+        if (this.memberForm.get('rolesKeymaster').value) {
+            userPayload.access.push(Access.KEYMASTER);
+        }
+        if (this.memberForm.get('rolesOnboarding').value) {
+            userPayload.access.push(Access.ONBOARDING);
+        }
         const primaryContactPayload = {
             firstName: this.memberForm.get('primaryFirstName').value,
             middleName: this.memberForm.get('primaryMiddleName').value,
@@ -79,6 +98,10 @@ export class AddMemberComponent implements OnInit {
             this.alertService.openAlert('', err.error.message, Alerts.DANGER);
         }
 
+    }
+
+    toggleRole(key: string) {
+        this.memberForm.patchValue({ [key]: !this.memberForm.get(key).value });
     }
 
 }

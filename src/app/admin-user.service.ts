@@ -64,7 +64,8 @@ export class AdminUserService {
             access: {
                 ADMIN: user.access && user.access.indexOf(Access.ADMIN) >= 0,
                 KEYMASTER: user.access && user.access.indexOf(Access.KEYMASTER) >= 0,
-                MEMBER: user.access && user.access.indexOf(Access.MEMBER) >= 0
+                MEMBER: user.access && user.access.indexOf(Access.MEMBER) >= 0,
+                ONBOARDING: user.access && user.access.indexOf(Access.ONBOARDING) >= 0
             }
         }));
     }
