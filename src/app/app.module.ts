@@ -20,6 +20,7 @@ import { AlertComponent } from './alert/alert.component';
 import { RecoverCodeComponent } from './recover-code/recover-code.component';
 import { ActiveMembersComponent } from './active-members/active-members.component';
 import { AddMemberComponent } from './add-member/add-member.component';
+import { EditMemberComponent } from './edit-member/edit-member.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { AddMemberComponent } from './add-member/add-member.component';
         AlertComponent,
         RecoverCodeComponent,
         ActiveMembersComponent,
-        AddMemberComponent
+        AddMemberComponent,
+        EditMemberComponent
     ],
     imports: [
         BrowserModule,

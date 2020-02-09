@@ -4,6 +4,7 @@ import { UserService } from '../user.service';
 import { AdminUserService } from '../admin-user.service';
 import { AlertService, Alerts } from '../alert.service';
 import { Access } from '../../enums/access';
+import { Pages } from '../../enums/pages';
 import * as _ from 'lodash';
 
 @Component({
@@ -50,6 +51,10 @@ export class SearchUsersComponent {
         this.adminUserService.searchResults = [];
         this.adminUserService.searchForm.patchValue({ key: '' });
         this.router.navigate(['/active-users']);
+    }
+
+    editUser(userId: string) {
+        this.router.navigate([`/${Pages.EDIT_MEMBER}/${userId}`]);
     }
 
 }

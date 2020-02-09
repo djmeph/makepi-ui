@@ -3,7 +3,6 @@
         <tr>
             <th scope="col">Username</th>
             <th scope="col">Plan</th>
-            <th scope="col" class="text-right">Payment Date</th>
             <th scope="col" class="text-right">Admin</th>
             <th scope="col" class="text-right">Keymaster</th>
             <th scope="col" class="text-right">Member</th>
@@ -13,8 +12,14 @@
     <tbody>
         <tr *ngFor="let member of members">
             <td>{{ member.user.username }}</td>
-            <td>{{ member.plan.name }}</td>
-            <td class="text-right">{{ member.subscription.paymentDay }}</td>
+            <td>
+                {{ member.plan.name }}
+                <div class="btn-group float-right" role="group" aria-label="Basic example">
+                    <button (click)="editUser(member.user.userId)" class="btn btn-light">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                </div>
+            </td>
             <td class="text-right"><input type="checkbox" [(ngModel)]="member.access.ADMIN" (change)="changeRole(member.user.username, member.access.ADMIN)" /></td>
             <td class="text-right"><input type="checkbox" [(ngModel)]="member.access.KEYMASTER" (change)="changeRole(member.user.username, member.access.KEYMASTER)" /></td>
             <td class="text-right"><input type="checkbox" [(ngModel)]="member.access.MEMBER" (change)="changeRole(member.user.username, member.access.MEMBER)" /></td>

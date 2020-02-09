@@ -13,7 +13,14 @@
             <td colspan="4"><em>{{adminUserService.searchResults.length}} result<span *ngIf="adminUserService.searchResults.length > 1">s</span> found for &quot;{{adminUserService.searchForm.get('key').value}}&quot;</em></td>
         </tr>
         <tr *ngFor="let user of adminUserService.searchResults">
-            <td>{{ user.username }}</td>
+            <td>
+                {{ user.username }}
+                <div class="btn-group float-right" role="group" aria-label="Basic example">
+                    <button (click)="editUser(user.userId)" class="btn btn-light">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                </div>
+            </td>
             <td class="text-right"><input type="checkbox" [(ngModel)]="user.access.ADMIN" (change)="changeRole(user.username, user.access.ADMIN)" /></td>
             <td class="text-right"><input type="checkbox" [(ngModel)]="user.access.KEYMASTER" (change)="changeRole(user.username, user.access.KEYMASTER)" /></td>
             <td class="text-right"><input type="checkbox" [(ngModel)]="user.access.MEMBER" (change)="changeRole(user.username, user.access.MEMBER)" /></td>

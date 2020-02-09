@@ -10,6 +10,7 @@ import { ActiveUsersComponent } from './active-users/active-users.component';
 import { SearchUsersComponent } from './search-users/search-users.component';
 import { ActiveMembersComponent } from './active-members/active-members.component';
 import { AddMemberComponent } from './add-member/add-member.component';
+import { EditMemberComponent } from './edit-member/edit-member.component';
 import { AuthGuardService as AuthGuard } from './auth.guard.service';
 import { AccessGuardService } from './access.guard.service';
 import { Access } from '../enums/access';
@@ -40,6 +41,12 @@ const routes: Routes = [
     {
         path: 'add-member',
         component: AddMemberComponent,
+        canActivate: [AuthGuard, AccessGuardService],
+        data: { roles: [Access.ADMIN, Access.KEYMASTER] }
+    },
+    {
+        path: 'edit-member/:userId',
+        component: EditMemberComponent,
         canActivate: [AuthGuard, AccessGuardService],
         data: { roles: [Access.ADMIN, Access.KEYMASTER] }
     },

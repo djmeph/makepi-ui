@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminUserService } from '../admin-user.service';
 import { AlertService, Alerts } from '../alert.service';
 import { User } from '../../models/user';
 import { Access } from '../../enums/access';
+import { Pages } from '../../enums/pages';
 import * as _ from 'lodash';
 
 @Component({
@@ -20,6 +22,7 @@ export class ActiveUsersComponent implements OnInit {
     constructor(
         private alertService: AlertService,
         private adminUserService: AdminUserService,
+        private router: Router,
     ) {
         this.users = [];
         this.access = Access;
@@ -93,6 +96,10 @@ export class ActiveUsersComponent implements OnInit {
             this.loading = false;
             this.alertService.openAlert('', err.error.message, Alerts.DANGER);
         }
+    }
+
+    editUser(userId: string) {
+        this.router.navigate([`/${Pages.EDIT_MEMBER}/${userId}`]);
     }
 
 }
