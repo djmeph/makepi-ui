@@ -27,11 +27,11 @@ export class AddMemberComponent implements OnInit {
         rolesMember: new FormControl(this.memberStatus.rolesMember),
         rolesKeymaster: new FormControl(this.memberStatus.rolesKeymaster),
         rolesOnboarding: new FormControl(this.memberStatus.rolesOnboarding),
-        emergencyFirstName: new FormControl(this.memberStatus.emergencyFirstName, [Validators.required]),
+        emergencyFirstName: new FormControl(this.memberStatus.emergencyFirstName),
         emergencyMiddleName: new FormControl(this.memberStatus.emergencyMiddleName),
-        emergencyLastName: new FormControl(this.memberStatus.emergencyLastName, [Validators.required]),
-        emergencyPhone: new FormControl(this.memberStatus.emergencyPhone, [Validators.required]),
-        emergencyRelation: new FormControl(this.memberStatus.emergencyRelation, [Validators.required]),
+        emergencyLastName: new FormControl(this.memberStatus.emergencyLastName),
+        emergencyPhone: new FormControl(this.memberStatus.emergencyPhone),
+        emergencyRelation: new FormControl(this.memberStatus.emergencyRelation),
     });
     roles: any;
 
