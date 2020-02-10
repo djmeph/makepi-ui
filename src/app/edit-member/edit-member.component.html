@@ -1,1 +1,127 @@
-<p>edit-member works!</p>
+<div *ngIf="loading" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div *ngIf="!loading">
+    <div *ngIf="user">
+        <h1 class="page-title">{{ user.username }}</h1>
+        <p>{{ user.userId }}</p>
+        <div *ngIf="primaryContact" class="card mb-1">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Primary Contact
+                </h5>
+                <p>
+                    {{ primaryContact.firstName }} {{ primaryContact.middleName }} {{ primaryContact.lastName }}<br />
+                    <span *ngIf="primaryContact.email">Email: {{ primaryContact.email }}<br /></span>
+                    <span *ngIf="primaryContact.phone">Phone: {{ primaryContact.phone }}<br /></span>
+                </p>
+            </div>
+        </div>
+        <div *ngIf="emergencyContact" class="card mb-1">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Emergency Contact
+                </h5>
+                <p>
+                    {{ emergencyContact.firstName }} {{ emergencyContact.middleName }} {{ emergencyContact.lastName }}<br />
+                    <span *ngIf="emergencyContact.email">Email: {{ emergencyContact.email }}<br /></span>
+                    <span *ngIf="emergencyContact.phone">Phone: {{ emergencyContact.phone }}<br /></span>
+                    <span *ngIf="emergencyContact.relation">Relation: {{ emergencyContact.relation }}<br /></span>
+                </p>
+            </div>
+        </div>
+        <div *ngIf="subscription" class="card mb-1">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Membership
+                    <button *ngIf="!editorToggles[editors.MEMBERSHIP]" (click)="toggleEditor(editors.MEMBERSHIP)" class="btn btn-light float-right"><i class="fa fa-edit"></i></button>
+                </h5>
+                <p *ngIf="!editorToggles[editors.MEMBERSHIP]">
+                    Payment Method: {{ subscription.paymentMethod.source.bank_name }}{{ subscription.paymentMethod.source.brand }} {{ subscription.paymentMethod.source.funding }} {{ subscription.paymentMethod.source.last4 }}<br />
+                    Membership Plan: {{ subscription.plan.name }}<br />
+                    Billing Day of Month: {{ subscription.paymentDay }}
+                </p>
+                <div *ngIf="editorToggles[editors.MEMBERSHIP]">
+                    <form [formGroup]="checkoutForm" (ngSubmit)="checkout()">
+                        <div class="card mb-1">
+                            <div class="card-body">
+                                <h5 class="card-title">Payment Method</h5>
+                                <ul class="list-group">
+                                    <li *ngFor="let paymentMethod of paymentMethods" class="list-group-item">
+                                        <input type="radio" formControlName="paymentMethodKey" value="{{paymentMethod.itemKey}}" />
+                                        <a (click)="setPaymentMethod(paymentMethod.itemKey)">
+                                            {{ paymentMethod.source.bank_name }}{{ paymentMethod.source.brand}} {{paymentMethod.source.funding}} {{ paymentMethod.source.last4 }}
+                                        </a>
+                                        <!-- button (click)="delete(paymentMethod.paymentMethodId)" type="button" class="btn btn-light float-right"><i class="fa fa-trash"></i></button -->
+                                    </li>
+                                    <li class="list-group-item">
+                                        <input type="radio" formControlName="paymentMethodKey" value="cash" />
+                                        <a (click)="setPaymentMethod('cash')">
+                                            Cash / Check
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card mb-1">
+                            <div class="card-body">
+                                <h5 class="card-title">Payment Plan</h5>
+                                <ul class="list-group mb-2">
+                                    <li *ngFor="let plan of latestPlans" class="list-group-item">
+                                        <input (click)="setPlan(plan.planId, plan.versionNumber)" type="radio" formControlName="planId" value="{{plan.planId}}" />
+                                        <a (click)="setPlan(plan.planId, plan.versionNumber)">
+                                            {{plan.name}} ${{plan.price}}
+                                        </a>
+                                    </li>
+                                </ul>
+                                <label>Billing day of the month <small>(1-28)</small></label>
+                                <input type="number" formControlName="paymentDay" class="form-control" />
+                            </div>
+                        </div>
+                        <div>
+                            <div *ngIf="!loaders.MEMBERSHIP" class="btn-group">
+                                <button type="submit" [disabled]="checkoutForm.invalid" class="btn btn-light">Save</button>
+                                <a (click)="cancel()" *ngIf="!loaders.MEMBERSHIP" class="btn btn-light">Cancel</a>
+                            </div>
+                            <div *ngIf="loaders.MEMBERSHIP" class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="schedules[scheduleStatuses.UNPAID].length" class="card mb-1">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Scheduled Payments - Unpaid
+                </h5>
+                <p *ngFor="let schedule of schedules[scheduleStatuses.UNPAID]">{{ schedule.paymentDate | date }}</p>
+            </div>
+        </div>
+        <div *ngIf="schedules[scheduleStatuses.PAID].length" class="card mb-1">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Scheduled Payments - Paid
+                </h5>
+                <p *ngFor="let schedule of schedules[scheduleStatuses.PAID]">{{ schedule.paymentDate | date }}</p>
+            </div>
+        </div>
+        <div *ngIf="schedules[scheduleStatuses.LATE].length" class="card mb-1">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Scheduled Payments - Late
+                </h5>
+                <p *ngFor="let schedule of schedules[scheduleStatuses.LATE]">{{ schedule.paymentDate | date }}</p>
+            </div>
+        </div>
+        <div *ngIf="schedules[scheduleStatuses.CANCELLED].length" class="card mb-1">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Scheduled Payments - Cancelled
+                </h5>
+                <p *ngFor="let schedule of schedules[scheduleStatuses.CANCELLED].length">{{ schedule.paymentDate | date }}</p>
+            </div>
+        </div>
+    </div>
+</div>

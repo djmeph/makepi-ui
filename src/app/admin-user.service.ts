@@ -4,6 +4,10 @@ import { GlobalService } from './global.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { User } from '../models/user';
 import { Access } from '../enums/access';
+import { ContactTypes } from '../enums/contact-types';
+import { ScheduleStatuses } from '../enums/schedule-statuses';
+import { PaymentMethods } from '../enums/payment-methods';
+import * as _ from 'lodash';
 
 @Injectable({
     providedIn: 'root'
@@ -70,11 +74,57 @@ export class AdminUserService {
         }));
     }
 
-    getMembers() {
+    getMembers(): Promise<any> {
         return this.http
             .get(`${this.globalService.API_URI}/admin/subscriptions/latest`)
-            .toPromise() as Promise<any>;
+            .toPromise();
     }
+
+    getUser(userId: string): Promise<any> {
+        return this.http
+            .get(`${this.globalService.API_URI}/admin/user/${userId}`)
+            .toPromise();
+    }
+
+    getContact(userId: string, contactId: ContactTypes): Promise<any> {
+        return this.http
+            .get(`${this.globalService.API_URI}/admin/contacts/${userId}/${contactId}`)
+            .toPromise();
+    }
+
+    getLatestSubscription(userId: string): Promise<any> {
+        return this.http
+            .get(`${this.globalService.API_URI}/admin/subscription/${userId}`)
+            .toPromise();
+    }
+
+    getSchedules(userId: string, status: ScheduleStatuses): Promise<any> {
+        return this.http
+            .get(`${this.globalService.API_URI}/admin/schedules/${userId}/${status}`)
+            .toPromise();
+    }
+
+    getPaymentMethod(userId: string, itemKey: string) {
+        const [schema, id] = itemKey.split('#');
+        return this.http
+            .get(`${this.globalService.API_URI}/admin/${schema}/${userId}/${id}`)
+            .toPromise();
+    }
+
+    getPaymentMethods(userId: string) {
+        return this.http
+            .get(`${this.globalService.API_URI}/admin/${PaymentMethods.STRIPE}/${userId}`)
+            .toPromise();
+
+    }
+
+    upsertSubscription(userId: string, body: any): Promise<any> {
+        return this.http
+            .post(`${this.globalService.API_URI}//admin/subscription/${userId}`, body)
+            .toPromise();
+    }
+
+    /* Private Functions */
 
     randomCodeGenerator(stringLength: number): string {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';

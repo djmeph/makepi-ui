@@ -14,10 +14,12 @@ export class AccessGuardService implements CanActivate {
         private router: Router,
     ) { }
 
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): Observable<boolean> | Promise<boolean> | boolean {
+    async canActivate(
+        route: ActivatedRouteSnapshot
+    ): Promise<boolean> {
+        if (!this.userService.user) {
+            await this.userService.get();
+        }
         if (this.userService.getAccess(route.data.roles)) {
             return true;
         } else {

@@ -13,7 +13,7 @@ export class AuthGuardService implements CanActivate {
         private router: Router
     ) { }
 
-    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    canActivate(): boolean {
         try {
             const authenticated = this.userService.jwtService.isAuthenticated();
             if (authenticated) {
