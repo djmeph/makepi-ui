@@ -23,4 +23,10 @@ export class AdminPlanService {
             .get(`${this.globalService.API_URI}/plans/latest`)
             .toPromise();
     }
+
+    upsert(body: any): Promise<any> {
+        return this.http
+            .post(`${this.globalService.API_URI}/plans`, body)
+            .toPromise();
+    }
 }

@@ -1,0 +1,39 @@
+<h1 class="page-title">New Plan</h1>
+<form [formGroup]="planForm" (ngSubmit)="!planForm.invalid && submit()">
+    <div class="card mb-1">
+        <div class="card-body">
+            <label>Plan ID</label>
+            <input type="text" formControlName="planId" class="form-control" />
+            <label>Name</label>
+            <input type="text" formControlName="name" class="form-control" />
+            <label>Amount</label>
+            <input type="number" formControlName="amount" class="form-control" />
+            <label>Increments</label>
+            <select class="form-control" formControlName="increments">
+                <option value="{{ increments.MONTHS }}">Months</option>
+                <option value="{{ increments.YEARS }}">Years</option>
+            </select>
+            <label>Price</label>
+            <input type="number" formControlName="price" class="form-control" />
+            <label>Sort</label>
+            <input type="number" formControlName="sort" class="form-control mb-2" />
+            <label>Access</label>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" formControlName="accessKeymaster">
+                <label class="form-check-label">Keymaster</label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" formControlName="accessMember">
+                <label class="form-check-label">Member</label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" formControlName="accessOnboarding">
+                <label class="form-check-label">Onboarding</label>
+            </div>
+            <button *ngIf="!saving" type="submit" [disabled]="planForm.invalid" [disabled]="planForm.invalid" class="btn btn-light">Save</button>
+            <div *ngIf="saving" class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+</form>

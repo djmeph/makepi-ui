@@ -1,0 +1,12 @@
+<button (click)="new()" class="btn btn-light float-right"><i class="fa fa-plus"></i>&nbsp;New&nbsp;Plan</button>
+<h1 class="page-title">Plans</h1>
+<div *ngFor="let plan of plans" class="card mb-1">
+    <div class="card-body">
+        <button (click)="editPlan(plan.planId)" class="btn btn-light float-right"><i class="fa fa-edit"></i></button>
+        <h5 class="card-title">{{ plan.name }}</h5>
+        <p>{{ plan.price | currency }} every {{ plan.amount }} {{ incrementText(plan.increments) }}</p>
+    </div>
+</div>
+<div *ngIf="loading" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>

@@ -8,4 +8,5 @@ export enum Pages {
     ACTIVE_MEMBERS = 'active-members',
     ADD_MEMBER = 'add-member',
     EDIT_MEMBER = 'edit-member',
+    PLANS = 'plans',
 }

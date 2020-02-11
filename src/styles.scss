@@ -58,3 +58,15 @@ $spacer: 20;
 .p-3 {
     padding: $spacer !important;
 }
+
+input {
+    &.ng-touched {
+        &.ng-invalid {
+            border: 1px solid red !important;
+        }
+
+        &.ng-valid {
+            border: 1px solid green !important;
+        }
+    }
+}

@@ -8,9 +8,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ActiveUsersComponent } from './active-users/active-users.component';
 import { SearchUsersComponent } from './search-users/search-users.component';
+import { PlansComponent } from './plans/plans.component';
+import { EditPlanComponent } from './edit-plan/edit-plan.component';
 import { ActiveMembersComponent } from './active-members/active-members.component';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { EditMemberComponent } from './edit-member/edit-member.component';
+import { NewPlanComponent } from './new-plan/new-plan.component';
 import { AuthGuardService as AuthGuard } from './auth.guard.service';
 import { AccessGuardService } from './access.guard.service';
 import { Access } from '../enums/access';
@@ -65,6 +68,24 @@ const routes: Routes = [
     {
         path: 'search-users',
         component: SearchUsersComponent,
+        canActivate: [AuthGuard, AccessGuardService],
+        data: { roles: [Access.ADMIN, Access.KEYMASTER] }
+    },
+    {
+        path: 'plans',
+        component: PlansComponent,
+        canActivate: [AuthGuard, AccessGuardService],
+        data: { roles: [Access.ADMIN, Access.KEYMASTER] }
+    },
+    {
+        path: 'edit-plan/:planId',
+        component: EditPlanComponent,
+        canActivate: [AuthGuard, AccessGuardService],
+        data: { roles: [Access.ADMIN, Access.KEYMASTER] }
+    },
+    {
+        path: 'new-plan',
+        component: NewPlanComponent,
         canActivate: [AuthGuard, AccessGuardService],
         data: { roles: [Access.ADMIN, Access.KEYMASTER] }
     },

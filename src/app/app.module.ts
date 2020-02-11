@@ -21,6 +21,9 @@ import { RecoverCodeComponent } from './recover-code/recover-code.component';
 import { ActiveMembersComponent } from './active-members/active-members.component';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { EditMemberComponent } from './edit-member/edit-member.component';
+import { PlansComponent } from './plans/plans.component';
+import { EditPlanComponent } from './edit-plan/edit-plan.component';
+import { NewPlanComponent } from './new-plan/new-plan.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +40,10 @@ import { EditMemberComponent } from './edit-member/edit-member.component';
         RecoverCodeComponent,
         ActiveMembersComponent,
         AddMemberComponent,
-        EditMemberComponent
+        EditMemberComponent,
+        PlansComponent,
+        EditPlanComponent,
+        NewPlanComponent
     ],
     imports: [
         BrowserModule,
