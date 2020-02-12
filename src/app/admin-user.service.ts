@@ -120,7 +120,7 @@ export class AdminUserService {
 
     upsertSubscription(userId: string, body: any): Promise<any> {
         return this.http
-            .post(`${this.globalService.API_URI}//admin/subscription/${userId}`, body)
+            .post(`${this.globalService.API_URI}/admin/subscription/${userId}`, body)
             .toPromise();
     }
 
