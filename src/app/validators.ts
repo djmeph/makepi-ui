@@ -14,7 +14,7 @@ export class CustomValidator {
 
     static planId(control: AbstractControl) {
         const val = control.value || '';
-        const stripUnknown = val.replace(/[^a-z-]+/, '');
+        const stripUnknown = val.replace(/[^a-z0-9-]+/, '');
 
         if (stripUnknown === val) {
             return null;
