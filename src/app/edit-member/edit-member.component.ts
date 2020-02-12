@@ -78,7 +78,7 @@ export class EditMemberComponent implements OnInit {
         };
         this.loaders = {
             MEMBERSHIP: false,
-        }
+        };
     }
 
 
@@ -165,13 +165,6 @@ export class EditMemberComponent implements OnInit {
                     .adminUserService.getPaymentMethod(this.userId, this.subscription.paymentMethodKey);
             }
         }
-        console.log({
-            user: this.user,
-            primaryContact: this.primaryContact,
-            emergencyContact: this.emergencyContact,
-            subscription: this.subscription,
-            schedules: this.schedules,
-        });
         this.loading = false;
     }
 
@@ -193,20 +186,28 @@ export class EditMemberComponent implements OnInit {
         const { value: versionNumber } = this.checkoutForm.get('versionNumber');
         const { value: paymentDay } = this.checkoutForm.get('paymentDay');
         try {
-            await this.adminUserService.upsertSubscription(this.userId, {
+            const params = {
                 paymentMethodKey,
                 plan: { planId, versionNumber },
                 paymentDay
-            });
-            const [plan] = _.filter(this.latestPlans, { planId, versionNumber });
+            };
+            await this.adminUserService.upsertSubscription(this.userId, params);
+            const [plan] = _.filter(this.latestPlans, { planId });
+            this.subscription = { ...params, plan, paymentDay };
             const [paymentMethod] = _.filter(this.paymentMethods, { itemKey: paymentMethodKey });
-            this.subscription.plan = plan;
-            this.subscription.paymentMethod = paymentMethod;
-            this.subscription.paymentDay = paymentDay;
+            if (paymentMethodKey === 'cash') {
+                this.subscription.paymentMethod = {
+                    source: { bank_name: 'Cash/Check' }
+                };
+            }
+            if (paymentMethod) {
+                this.subscription.paymentMethod = paymentMethod;
+            }
             this.loaders.MEMBERSHIP = false;
             this.cancel();
         } catch (err) {
-            this.alertService.openAlert('', err.error.message, Alerts.DANGER);
+            console.error(err);
+            this.alertService.openAlert('', '', Alerts.DANGER);
             this.loaders.MEMBERSHIP = false;
         }
     }

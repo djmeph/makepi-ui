@@ -30,13 +30,13 @@
                 </p>
             </div>
         </div>
-        <div *ngIf="subscription" class="card mb-1">
+        <div class="card mb-1">
             <div class="card-body">
                 <h5 class="card-title">
                     Membership
                     <button *ngIf="!editorToggles[editors.MEMBERSHIP]" (click)="toggleEditor(editors.MEMBERSHIP)" class="btn btn-light float-right"><i class="fa fa-edit"></i></button>
                 </h5>
-                <p *ngIf="!editorToggles[editors.MEMBERSHIP]">
+                <p *ngIf="subscription && !editorToggles[editors.MEMBERSHIP]">
                     Payment Method: {{ subscription.paymentMethod.source.bank_name }}{{ subscription.paymentMethod.source.brand }} {{ subscription.paymentMethod.source.funding }} {{ subscription.paymentMethod.source.last4 }}<br />
                     Membership Plan: {{ subscription.plan.name }}<br />
                     Billing Day of Month: {{ subscription.paymentDay }}
