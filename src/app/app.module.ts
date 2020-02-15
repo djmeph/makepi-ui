@@ -24,6 +24,7 @@ import { EditMemberComponent } from './edit-member/edit-member.component';
 import { PlansComponent } from './plans/plans.component';
 import { EditPlanComponent } from './edit-plan/edit-plan.component';
 import { NewPlanComponent } from './new-plan/new-plan.component';
+import { UpcomingPaymentsComponent } from './upcoming-payments/upcoming-payments.component';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { NewPlanComponent } from './new-plan/new-plan.component';
         EditMemberComponent,
         PlansComponent,
         EditPlanComponent,
-        NewPlanComponent
+        NewPlanComponent,
+        UpcomingPaymentsComponent
     ],
     imports: [
         BrowserModule,

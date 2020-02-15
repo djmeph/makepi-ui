@@ -124,6 +124,12 @@ export class AdminUserService {
             .toPromise();
     }
 
+    getAllSchedulesByStatus(status: ScheduleStatuses): Promise<any> {
+        return this.http
+            .get(`${this.globalService.API_URI}/admin/all-schedules/${status}`)
+            .toPromise();
+    }
+
     /* Private Functions */
 
     randomCodeGenerator(stringLength: number): string {

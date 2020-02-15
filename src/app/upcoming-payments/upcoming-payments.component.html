@@ -1,0 +1,28 @@
+<h1 class="page-title">Upcoming Payments</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Payment Date</th>
+            <th scope="col">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let schedule of schedules">
+            <td>
+                <span *ngIf="schedule.contact">{{ schedule.contact.firstName }} {{ schedule.contact.middleName }} {{ schedule.contact.lastName }}</span>
+                <div class="btn-group float-right">
+                    <button (click)="editUser(schedule.schedule.userId)" class="btn btn-light">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                </div>
+            </td>
+            <td><span *ngIf="schedule.schedule">{{ schedule.schedule.paymentDate | date }}</span></td>
+            <td><span *ngIf="schedule.schedule">{{ schedule.schedule.balance | currency }}</span></td>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="loading" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+

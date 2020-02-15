@@ -14,6 +14,7 @@ import { ActiveMembersComponent } from './active-members/active-members.componen
 import { AddMemberComponent } from './add-member/add-member.component';
 import { EditMemberComponent } from './edit-member/edit-member.component';
 import { NewPlanComponent } from './new-plan/new-plan.component';
+import { UpcomingPaymentsComponent } from './upcoming-payments/upcoming-payments.component';
 import { AuthGuardService as AuthGuard } from './auth.guard.service';
 import { AccessGuardService } from './access.guard.service';
 import { Access } from '../enums/access';
@@ -86,6 +87,12 @@ const routes: Routes = [
     {
         path: 'new-plan',
         component: NewPlanComponent,
+        canActivate: [AuthGuard, AccessGuardService],
+        data: { roles: [Access.ADMIN, Access.KEYMASTER] }
+    },
+    {
+        path: 'upcoming-payments',
+        component: UpcomingPaymentsComponent,
         canActivate: [AuthGuard, AccessGuardService],
         data: { roles: [Access.ADMIN, Access.KEYMASTER] }
     },
