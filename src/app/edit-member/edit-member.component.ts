@@ -111,7 +111,10 @@ export class EditMemberComponent implements OnInit {
             new Promise(async (resolve) => {
                 try {
                     this.subscription = await this.adminUserService.getLatestSubscription(this.userId);
-                    this.subscription.plan = await this.adminPlanService.get(this.subscription.plan);
+                    const { plan: { planId } } = this.subscription;
+                    const plan = planId === 'cancel' ? {} :
+                        await this.adminPlanService.get(this.subscription.plan);
+                    this.subscription.plan = plan;
                     resolve();
                 } catch (err) {
                     resolve();
@@ -151,7 +154,9 @@ export class EditMemberComponent implements OnInit {
             this.checkoutForm.patchValue({ planId: this.subscription.plan.planId });
             this.checkoutForm.patchValue({ versionNumber: this.subscription.plan.versionNumber });
             this.checkoutForm.patchValue({ paymentDay: this.subscription.paymentDay });
-            if (this.subscription.paymentMethodKey === 'cash') {
+            if (this.subscription.paymentMethodKey === null) {
+                this.subscription.paymentMethod = {};
+            } else if (this.subscription.paymentMethodKey === 'cash') {
                 this.subscription.paymentMethod = { source: { bank_name: 'Cash/Check' } };
                 this.checkoutForm.patchValue({ paymentMethodKey: 'cash' });
             } else {
@@ -206,7 +211,6 @@ export class EditMemberComponent implements OnInit {
             this.loaders.MEMBERSHIP = false;
             this.cancel();
         } catch (err) {
-            console.error(err);
             this.alertService.openAlert('', '', Alerts.DANGER);
             this.loaders.MEMBERSHIP = false;
         }
@@ -221,6 +225,11 @@ export class EditMemberComponent implements OnInit {
     setPaymentMethod(paymentMethodKey: string) {
         if (this.checkoutForm.get('paymentMethodKey').value === paymentMethodKey) { return; }
         this.checkoutForm.patchValue({ paymentMethodKey });
+    }
+
+    async cancelSubscription() {
+        await this.adminUserService.cancelSubscrption(this.userId);
+        await this.ngOnInit();
     }
 
 }

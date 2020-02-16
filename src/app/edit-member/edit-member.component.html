@@ -34,13 +34,21 @@
             <div class="card-body">
                 <h5 class="card-title">
                     Membership
-                    <button *ngIf="!editorToggles[editors.MEMBERSHIP]" (click)="toggleEditor(editors.MEMBERSHIP)" class="btn btn-light float-right"><i class="fa fa-edit"></i></button>
+                    <div *ngIf="!editorToggles[editors.MEMBERSHIP]" class="btn-group">
+                        <button (click)="toggleEditor(editors.MEMBERSHIP)" class="btn btn-light float-right"><i class="fa fa-edit"></i>&nbsp;Edit</button>
+                        <button (click)="cancelSubscription()" class="btn btn-light float-right"><i class="fa fa-stop-circle"></i>&nbsp;Cancel</button>
+                    </div>
                 </h5>
-                <p *ngIf="subscription && !editorToggles[editors.MEMBERSHIP]">
-                    Payment Method: {{ subscription.paymentMethod.source.bank_name }}{{ subscription.paymentMethod.source.brand }} {{ subscription.paymentMethod.source.funding }} {{ subscription.paymentMethod.source.last4 }}<br />
-                    Membership Plan: {{ subscription.plan.name }}<br />
-                    Billing Day of Month: {{ subscription.paymentDay }}
-                </p>
+                <div *ngIf="!editorToggles[editors.MEMBERSHIP]">
+                    <p *ngIf="subscription && subscription.plan.name">
+                        Payment Method: {{ subscription.paymentMethod.source.bank_name }}{{ subscription.paymentMethod.source.brand }} {{ subscription.paymentMethod.source.funding }} {{ subscription.paymentMethod.source.last4 }}<br />
+                        Membership Plan: {{ subscription.plan.name }}<br />
+                        Billing Day of Month: {{ subscription.paymentDay }}
+                    </p>
+                    <p *ngIf="!(subscription && subscription.plan.name)">
+                        Cancelled
+                    </p>
+                </div>
                 <div *ngIf="editorToggles[editors.MEMBERSHIP]">
                     <form [formGroup]="checkoutForm" (ngSubmit)="checkout()">
                         <div class="card mb-1">

@@ -130,6 +130,12 @@ export class AdminUserService {
             .toPromise();
     }
 
+    cancelSubscrption(userId: string) {
+        return this.http
+            .delete(`${this.globalService.API_URI}/admin/subscription/${userId}`)
+            .toPromise();
+    }
+
     /* Private Functions */
 
     randomCodeGenerator(stringLength: number): string {
